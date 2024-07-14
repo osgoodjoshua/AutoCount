@@ -8,7 +8,7 @@ function About() {
       className='flex flex-row justify-center mx-auto bg-cover bg-fixed'
       >
         <div className='flex place-items-center h-screen'>
-          <h3 className='p-5 bg-yellow-100 bg-opacity-75 text-blue-900 text-5xl rounded'>About</h3>
+          <h3 className='p-5 bg-slate-300 bg-opacity-15 rounded text-white text-6xl'>About</h3>
         </div>
     </div>
   )

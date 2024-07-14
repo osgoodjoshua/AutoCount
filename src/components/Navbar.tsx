@@ -1,14 +1,29 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function Navbar() {
 
     const [isVisible, setIsVisible] = useState(false)
 
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+    const signOutOnClick = () => {
+        logout();
+    };
+
+    const signInOnClick = () => {
+        loginWithRedirect();
+    };
+
     const dropDown = () => {
-        setIsVisible(!isVisible)
-    }
+        setIsVisible(!isVisible);
+    };
+
+    const clicked = () => {
+        setIsVisible(false);
+    };
 
 
     return (
@@ -25,9 +40,15 @@ function Navbar() {
             { isVisible ? (
             <div className='w-full block flex-grow items-center'>
                 <div className="text-sm lg:flex-grow space-x-5 pt-5">
-                    <Button text='Home' link='/'/>
-                    <Button text='About' link='/about'/>
-                    <Button text='Dashboard' link='/dashboard'/>
+                    <Button text='Home' link='/' onClick={clicked}/>
+                    <Button text='About' link='/about' onClick={clicked}/>
+                    <Button text='Dashboard' link='/dashboard' onClick={clicked}/>
+                    {
+                            !isAuthenticated ? 
+                            <Button text='Login' onClick={signInOnClick}/>
+                            :
+                            <Button text='Sign Out' onClick={signOutOnClick}/>
+                        }
                 </div>
             </div>
             ) : (
