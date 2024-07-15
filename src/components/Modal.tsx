@@ -1,4 +1,4 @@
-import ContactForm from './ContactForm';
+import CarForm from './CarForm';
 
 type Props = {
     id?: string[],
@@ -30,7 +30,7 @@ const Modal = (props: Props) => {
                     </button>
                 </div>
                 <div className="p-4">
-                    <ContactForm id={props.id} onActionComplete={props.onActionComplete} />
+                    <CarForm id={props.id} onActionComplete={props.onActionComplete} />
                 </div>
             </div>
         </div>

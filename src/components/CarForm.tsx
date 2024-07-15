@@ -3,15 +3,15 @@ import Input from "./Input";
 import { useForm } from 'react-hook-form';
 import { server_calls } from "../api/server";
 import { useDispatch } from "react-redux";
-import { chooseMake, chooseModel, chooseYear, chooseColor } from "../redux/slices/RootSlice";
+import { chooseMake, chooseModel, chooseYear } from "../redux/slices/RootSlice";
 import { v4 as uuidv4 } from 'uuid';
 
-interface ContactFormProps {
+interface CarFormProps {
   id?: string[];
   onActionComplete: () => void;
 }
 
-const ContactForm = (props: ContactFormProps) => {
+const CarForm = (props: CarFormProps) => {
   const { register, handleSubmit } = useForm({});
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +36,6 @@ const ContactForm = (props: ContactFormProps) => {
         dispatch(chooseMake(newCar.make));
         dispatch(chooseModel(newCar.model));
         dispatch(chooseYear(newCar.year));
-        dispatch(chooseColor(newCar.color));
 
         await server_calls.create(newCar);
       }
@@ -64,10 +63,6 @@ const ContactForm = (props: ContactFormProps) => {
           <label htmlFor="year">Year</label>
           <Input {...register('year')} name='year' placeholder="Year" />
         </div>
-        <div>
-          <label htmlFor="color">Color</label>
-          <Input {...register('color')} name='color' placeholder="Color" />
-        </div>
         <div className="flex p-1">
           <button type='submit' className="flex justify-start m-3 bg-slate-300 p-2 rounded hover:bg-slate-800 text-white">
             Submit
@@ -78,4 +73,4 @@ const ContactForm = (props: ContactFormProps) => {
   );
 }
 
-export default ContactForm;
+export default CarForm;

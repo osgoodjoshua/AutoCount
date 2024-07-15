@@ -1,59 +1,81 @@
-import { supabase } from '../config/supabaseClient';
-
+const token = 'a74797d4870cf9c4f1b9d66d265199341e0991c0c31d7fa4'
 
 export const server_calls = {
-    get: async () => {
-        const { data, error } = await supabase
-            .from('new__car')
-            .select('*');
+    get: async () => { 
+        const response = await fetch(`https://car-inventory-app.onrender.com/api/cars`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'x-access-token': `Bearer ${token}`
+            }
 
-        if (error) {
-            console.error('Error fetching data:', error);
-            throw new Error('Failed to fetch data from the server');
+        });
+
+        if (!response.ok){
+            throw new Error('Failed to fetch data from the server')
         }
 
-        return data;
+        return await response.json()
     },
 
-    create: async (data: any) => {
-        console.log('Creating new car:', data); 
-        const { data: createdData, error } = await supabase
-            .from('new__car')
-            .insert(data);
+    create: async (data: any = {}) => {
+        const response = await fetch(`https://car-inventory-app.onrender.com/api/create_car`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'x-access-token': `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
 
-        if (error) {
-            console.error('Error creating data:', error.details);
-            throw new Error('Failed to create new data on the server');
+        })
+
+        if (!response.ok) {
+            throw new Error('Failed to create new data on the server')
         }
 
-        return createdData;
+        return await response.json()
     },
 
-    update: async (id: string, data: any) => {
-        const { data: updatedData, error } = await supabase
-            .from('new__car')
-            .update(data)
-            .eq('id', id);
+    update: async (id: string, data:any = {}) => {
+        const response = await fetch(`https://car-inventory-app.onrender.com/api/cars/${id}`,
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'x-access-token': `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
 
-        if (error) {
-            console.error('Error updating data:', error);
-            throw new Error('Failed to update data on the server');
+        })
+
+        if (!response.ok) {
+            throw new Error('Failed to update data on the server')
         }
 
-        return updatedData;
+        return await response.json()
     },
 
     delete: async (id: string) => {
-        const { data: deletedData, error } = await supabase
-            .from('new__car')
-            .delete()
-            .eq('id', id);
+        const response = await fetch(`https://car-inventory-app.onrender.com/api/cars/${id}`,
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'x-access-token': `Bearer ${token}`
+            },
 
-        if (error) {
-            console.error('Error deleting data:', error);
-            throw new Error('Failed to delete data from the server');
+        })
+
+        if (!response.ok) {
+            throw new Error('Failed to delete data from the server')
         }
 
-        return deletedData;
+        return;
     },
-};
+}

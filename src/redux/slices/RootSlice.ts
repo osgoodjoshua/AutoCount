@@ -5,16 +5,14 @@ export const rootSlice = createSlice({
   initialState: {
     make: '',
     model: '',
-    year: '',
-    color: ''
+    year: ''
   },
   reducers: {
     chooseMake: (state, action) => { state.make = action.payload },
     chooseModel: (state, action) => { state.model = action.payload },
     chooseYear: (state, action) => { state.year = action.payload },
-    chooseColor: (state, action) => { state.color = action.payload },
   }
 });
 
-export const { chooseMake, chooseModel, chooseYear, chooseColor } = rootSlice.actions;
+export const { chooseMake, chooseModel, chooseYear } = rootSlice.actions;
 export default rootSlice.reducer;
